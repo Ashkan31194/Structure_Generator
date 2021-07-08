@@ -244,7 +244,7 @@ for i=1:N_Vertices
     QQ=(rotz((180/pi)*Angle_Updated(i,1))*roty((180/pi)*Angle_Updated(i,2))*rotx((180/pi)*Angle_Updated(i,3))*RR')';
     AAQQ=RCenter+QQ;
     %scatter3(AAQQ(:,1),AAQQ(:,2),AAQQ(:,3),'k')
-    FFDD{i}=RCenter+QQ;
+    FFDD{i}=((Box_Updated^-1)*(RCenter'+QQ'))';
 end
 
 maxX=-Inf;
@@ -276,7 +276,7 @@ for i=1:size(FFDD,2)
     end
 end
 figure(2)
-Origin=[minX minY minZ];
+Origin=(Box_Updated*[minX; minY; minZ])';
 scatter3(XYZ_Updated(:,1),XYZ_Updated(:,2),XYZ_Updated(:,3),'filled','r')
 hold on
 PPLL=[Origin;...
@@ -299,7 +299,7 @@ PPLL=[Origin;...
 
  plot3(PPLL(:,1),PPLL(:,2),PPLL(:,3),'b')
  for i=1:size(FFDD,2)
-     AFG=FFDD{i};
+     AFG=(Box*FFDD{i}')';
      hold on
      scatter3(AFG(:,1),AFG(:,2),AFG(:,3),'*','k')
  end
